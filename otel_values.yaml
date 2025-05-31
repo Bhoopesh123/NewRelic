@@ -1,0 +1,29 @@
+mode: deployment
+
+image:
+  repository: otel/opentelemetry-collector-k8s
+  
+config:
+  exporters:
+    otlphttp:
+      endpoint: https://otlp.nr-data.net:4318
+      headers:
+        api-key: b8d334f90645d1700d37a5a8f96fe462FFFFNRAL
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        exporters: [otlphttp]
+      metrics:
+        receivers: [otlp]
+        exporters: [otlphttp]
+      logs:
+        receivers: [otlp]
+        exporters: [otlphttp]
+
+# # Enable receivers for telemetry data
+# receivers:
+#   otlp:
+#     protocols:
+#       grpc:
+#       http:
